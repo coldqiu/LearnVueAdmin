@@ -2,8 +2,8 @@
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">
-        <span v-if="item.redirect==='noredirect'||index==levelList.length-1" class="no-redirect">{{ item.meta.title }}</span>
-        <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
+        <span v-if="item.redirect==='noredirect'||index==levelList.length-1" class="no-redirect">{{ generateTitle(item.meta.title) }}</span>
+        <a v-else @click.prevent="handleLink(item)">{{ generateTitle(item.meta.title) }}</a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -11,6 +11,7 @@
 
 <script>
 import pathToRegexp from 'path-to-regexp'
+import { generateTitle } from '@/utils/i18n'
 
 export default {
   data() {
@@ -28,14 +29,33 @@ export default {
   },
   methods: {
     getBreadcrumb() {
+      // 默认 登陆后跳转到 /Dashboard 这时 路由没有 meta信息，只有name,redirect,regex
       let matched = this.$route.matched.filter(item => item.name)
+      console.log('matched', matched) // 只有 redirect, regex
+      console.log('this.$route', this.$route) // 只有 name, redirect, regex
 
       const first = matched[0]
-      if (first && first.name !== 'dashboard') {
+      console.log("first", first)
+      // 为什么加这个 if 判断， 去掉也可以吧？！ 恩应该不能去掉，
+      // 登陆后重定向 会执行这个 if 从而给原本只有 name,redirect,regex 的$route.matched
+      // 加上 { path: '/dashboard', meta: { title: 'Dashboard' }} 等数据,
+      // 当正常（不是重定向）访问这个路由不会执行 if 中的内容，...
+      // 为了在 breadcrumb中的 左侧 加一个 路由
+      // 全部都加上首页路由
+//      if (first && first.name !== 'dashboard') {
+//      if (first && first.name !== 'Dashboard') {
+      if (first && first.name) {
+        console.log("frist.name-insided", first.name)
+        console.log("mathced-one", matched)
+        console.log("asdf")
         matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
+        console.log("matched-last", matched)
       }
-
+      // 这个 filter 的作用？ 哪来的 item.meta.breadcrumb 可删掉吧
+      // 暂且 放过这些细节， 先把握整体 3.13 breadcrumb 组件暂告一段时间，
+      // 毕竟今天是为了理解 国际化的(已经基本了解整个流程）
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+      console.log('levelList', this.levelList)
     },
     pathCompile(path) {
       // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
@@ -50,7 +70,8 @@ export default {
         return
       }
       this.$router.push(this.pathCompile(path))
-    }
+    },
+    generateTitle
   }
 }
 </script>

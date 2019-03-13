@@ -87,7 +87,7 @@ export const constantRouterMap = [
         path: 'menu1',
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
         name: 'Menu1',
-        meta: { title: 'Menu1' },
+        meta: { title: 'menu1' },
         children: [
           {
             path: 'menu1-1',
@@ -140,6 +140,16 @@ export const constantRouterMap = [
         meta: { title: 'External Link', icon: 'link' }
       }
     ]
+  },
+  {
+    path: 'dashboard',
+    component: Layout,
+    redirect: '/dashboard',
+    name: 'Dashboard',
+    meta: {
+      title: 'dashboard',
+      icon: 'dashboard'
+    },
   },
 
   { path: '*', redirect: '/404', hidden: true }
