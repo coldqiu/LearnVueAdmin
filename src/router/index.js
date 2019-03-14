@@ -141,6 +141,7 @@ export const constantRouterMap = [
       }
     ]
   },
+
   {
     path: 'dashboard',
     component: Layout,
@@ -152,6 +153,19 @@ export const constantRouterMap = [
     },
   },
 
+  {
+    path: '/icon',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/svg-icons/index'),
+        name: 'Icons',
+        meta: { title: 'icons', icon: 'icon', noCache: true }
+      }
+    ]
+  },
+
   { path: '*', redirect: '/404', hidden: true }
 ]
 
@@ -160,3 +174,8 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
+
+// 关于 权限相关的动态路由 暂放，这里只是提供一个 asyncRouterMap 以除去警告
+export const asyncRouterMap = [
+
+]

@@ -31,11 +31,8 @@ export default {
     getBreadcrumb() {
       // 默认 登陆后跳转到 /Dashboard 这时 路由没有 meta信息，只有name,redirect,regex
       let matched = this.$route.matched.filter(item => item.name)
-      console.log('matched', matched) // 只有 redirect, regex
-      console.log('this.$route', this.$route) // 只有 name, redirect, regex
 
       const first = matched[0]
-      console.log("first", first)
       // 为什么加这个 if 判断， 去掉也可以吧？！ 恩应该不能去掉，
       // 登陆后重定向 会执行这个 if 从而给原本只有 name,redirect,regex 的$route.matched
       // 加上 { path: '/dashboard', meta: { title: 'Dashboard' }} 等数据,
@@ -45,17 +42,12 @@ export default {
 //      if (first && first.name !== 'dashboard') {
 //      if (first && first.name !== 'Dashboard') {
       if (first && first.name) {
-        console.log("frist.name-insided", first.name)
-        console.log("mathced-one", matched)
-        console.log("asdf")
         matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
-        console.log("matched-last", matched)
       }
       // 这个 filter 的作用？ 哪来的 item.meta.breadcrumb 可删掉吧
       // 暂且 放过这些细节， 先把握整体 3.13 breadcrumb 组件暂告一段时间，
       // 毕竟今天是为了理解 国际化的(已经基本了解整个流程）
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
-      console.log('levelList', this.levelList)
     },
     pathCompile(path) {
       // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
