@@ -7,7 +7,8 @@ const app = {
       withoutAnimation: false
     },
     device: 'desktop',
-    language: Cookies.get('language') || 'zh'
+    language: Cookies.get('language') || 'zh',
+    size: Cookies.get('size') || 'medium'
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
@@ -31,6 +32,10 @@ const app = {
       console.log("this is SET_LANGUAGE")
       state.language = language
       Cookies.set('language', language)
+    },
+    SET_SIZE: (state, size) => {
+      state.size = size
+      Cookies.set('size', size)
     }
   },
   actions: {
@@ -46,6 +51,9 @@ const app = {
     setLanguage({ commit }, language) {
       console.log("this is setLanguage")
       commit('SET_LANGUAGE', language)
+    },
+    setSize( {commit }, size) {
+      commit('SET_SIZE', size)
     }
   }
 }

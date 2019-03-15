@@ -143,9 +143,8 @@ export const constantRouterMap = [
   },
 
   {
-    path: 'dashboard',
+    path: '/dashboard',
     component: Layout,
-    redirect: '/dashboard',
     name: 'Dashboard',
     meta: {
       title: 'dashboard',

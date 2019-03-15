@@ -3,24 +3,25 @@
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
     <breadcrumb />
     <div class="right-menu">
-      <lang-select class="right-menu-item hover-effect"/>
-
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom"/>
-        </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link class="inlineBlock" to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-          <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">LogOut</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+     <template v-if="device!== 'mobile'">
+       <lang-select class="right-menu-item hover-effect"/>
+     </template>
+     <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+         <div class="avatar-wrapper">
+           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+           <i class="el-icon-caret-bottom"/>
+         </div>
+         <el-dropdown-menu slot="dropdown" class="user-dropdown">
+           <router-link class="inlineBlock" to="/">
+             <el-dropdown-item>
+               Home
+             </el-dropdown-item>
+           </router-link>
+           <el-dropdown-item divided>
+             <span style="display:block;" @click="logout">LogOut</span>
+           </el-dropdown-item>
+         </el-dropdown-menu>
+       </el-dropdown>
     </div>
   </div>
 </template>
@@ -41,6 +42,7 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar',
+      'device'
     ])
   },
   methods: {
