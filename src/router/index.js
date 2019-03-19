@@ -164,6 +164,27 @@ export const constantRouterMap = [
       }
     ]
   },
+  {
+    path: '/table',
+    component: Layout,
+    redirect: '/table/normal',
+    name: 'table',
+    meta: { title: 'table', icon: 'table' },
+    children: [
+      {
+        path: 'normal',
+        component: () => import('@/views/table/index'),
+        name: 'Table',
+        meta: { title: '普通table', noCache: true }
+      },
+      {
+        path: 'complexTable',
+        component: () => import('@/views/table/complexTable'),
+        name: 'complexTable',
+        meta: { title: '综合Table', noCache: true }
+      }
+    ]
+  },
 
   { path: '*', redirect: '/404', hidden: true }
 ]
