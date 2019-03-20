@@ -2,6 +2,13 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   console.log("query:", query)
+  console.log("request", request)
+  console.log("request({})",request({
+                    url: '/article/list',
+                    method: 'get',
+                    params: query
+            })
+  )
   return request({
     url: '/article/list',
     method: 'get',

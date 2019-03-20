@@ -16,6 +16,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import './mock'
 
 import i18n from './lang/index' // Internationlization
 

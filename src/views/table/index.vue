@@ -43,7 +43,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+//import { getList } from '@/api/table'
+import { fetchList } from '@/api/article'
 
 export default {
   filters: {
@@ -68,7 +69,7 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList(this.listQuery).then(response => {
+      fetchList(this.listQuery).then(response => {
         console.log('response-views-table-index.vue-getList:', response)
         this.list = response.data.items
         this.listLoading = false

@@ -213,12 +213,10 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      console.log("fetchList", fetchList)
       fetchList(this.listQuery).then(response => {
         console.log("response:", response)
         this.list = response.data.items
         this.total = response.data.total
-        console.log("this.list", this.list)
 
         // Just to simulate the time of the request
         setTimeout(() => {
