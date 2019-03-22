@@ -17,11 +17,12 @@ service.interceptors.request.use(
       console.log("first-service.interceptors.request.use-config")
       config.headers['X-Token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
     }
+    console.log("this.is.interceptors1.config", config)
     return config
   },
   error => {
     // Do something with request error
-
+    // console.log("this.is.interceptors1.error", error)
     console.log("first-service.interceptors.request.use-error")
     console.log(error) // for debug
     Promise.reject(error)
@@ -31,8 +32,9 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
+    console.log("response.data:", response.data)
     console.log("response:", response)
-    return  response
+    return  response.data
   },
   // response => {
   //   /**

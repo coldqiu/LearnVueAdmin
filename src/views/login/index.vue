@@ -59,20 +59,25 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: 'admin'
+        password: '1111111'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
-      loading: false,
+//      loading: false,
       pwdType: 'password',
+//      redirect: undefined
+//      passwordType: 'password',
+      loading: false,
+//      showDialog: false,
       redirect: undefined
     }
   },
   watch: {
     $route: {
       handler: function(route) {
+        console.log("login.vue-$route:", route)
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -90,9 +95,11 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(() => {
+          console.log("before-LoginByUsername")
+          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+            console.log("after-LoginByUsername")
             this.loading = false
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({ path: this.redirect || '/table/normal' })
           }).catch(() => {
             this.loading = false
           })
