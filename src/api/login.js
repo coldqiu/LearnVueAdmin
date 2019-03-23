@@ -1,7 +1,6 @@
 import request from '@/utils/request'
 
 export function loginByUsername(username, password) {
-  console.log("request-login.js:",username)
   const data = {
     username,
     password
@@ -15,7 +14,6 @@ export function loginByUsername(username, password) {
 }
 
 export function getUserInfo(token) {
-  console.log("token-getUserInfo", token)
   return request({
     url: '/user/info',
     method: 'get',

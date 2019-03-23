@@ -29,7 +29,6 @@ const app = {
       state.device = device
     },
     SET_LANGUAGE: (state, language) => {
-      console.log("this is SET_LANGUAGE")
       state.language = language
       Cookies.set('language', language)
     },
@@ -49,7 +48,6 @@ const app = {
       commit('TOGGLE_DEVICE', device)
     },
     setLanguage({ commit }, language) {
-      console.log("this is setLanguage")
       commit('SET_LANGUAGE', language)
     },
     setSize( {commit }, size) {

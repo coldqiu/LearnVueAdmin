@@ -6,7 +6,13 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    user: '',
+    introduction: '',
+    setting: {
+      articlePlatform: []
+    },
+    code: ''
   },
 
   mutations: {
@@ -21,6 +27,18 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_INTRODUCTION: (state, introduction) => {
+      state.introduction = introduction
+    },
+    SET_SETTING: (state, setting) => {
+      state.setting = setting
+    },
+    SET_STATUS: (state, status) => {
+      state.status = status
+    },
+    SET_CODE: (state, code) => {
+      state.code = code
     }
   },
 
@@ -28,11 +46,9 @@ const user = {
 
     // 用户名登录
     LoginByUsername({ commit }, userInfo) {
-      console.log("hanshu-userInfo", userInfo)
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
         loginByUsername(username, userInfo.password).then(response => {
-          console.log("loginByUsername-response", response)
           const data = response.data
           commit('SET_TOKEN', data.token)
           setToken(response.data.token)
@@ -42,25 +58,6 @@ const user = {
         })
       })
     },
-
-    // 获取用户信息
-    // GetInfo({ commit, state }) {
-    //   return new Promise((resolve, reject) => {
-    //     getInfo(state.token).then(response => {
-    //       const data = response.data
-    //       if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-    //         commit('SET_ROLES', data.roles)
-    //       } else {
-    //         reject('getInfo: roles must be a non-null array !')
-    //       }
-    //       commit('SET_NAME', data.name)
-    //       commit('SET_AVATAR', data.avatar)
-    //       resolve(response)
-    //     }).catch(error => {
-    //       reject(error)
-    //     })
-    //   })
-    // },
 
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
@@ -105,6 +102,23 @@ const user = {
         commit('SET_TOKEN', '')
         removeToken()
         resolve()
+      })
+    },
+
+    // 动态修改权限
+    ChangeRoles({ commit, dispatch }, role) {
+      return new Promise(resolve => {
+        commit('SET_TOKEN', role)
+        setToken(role)
+        getUserInfo(role).then(response => {
+          const data = response.data
+          commit('SET_ROLES', data.roles)
+          commit('SET_NAME', data.name)
+          commit('SET_AVATAR', data.avatar)
+          commit('SET_INTRODUCTION', data.introduction)
+          dispatch('GenerateRoutes', data) // 动态修改权限后 重绘侧边菜单
+          resolve()
+        })
       })
     }
   }

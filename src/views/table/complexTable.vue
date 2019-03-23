@@ -214,7 +214,6 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        console.log("response:", response)
         this.list = response.data.items
         this.total = response.data.total
 
@@ -351,7 +350,9 @@ export default {
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
+        console.log("jDDDDDDDDDDDDDDDDD", j)
         if (j === 'timestamp') {
+          console.log("v[j]", v[j])
           return parseTime(v[j])
         } else {
           return v[j]

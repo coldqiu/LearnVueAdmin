@@ -3,6 +3,9 @@
  */
 
 export function parseTime(time, cFormat) {
+  console.log("parseTime", time)
+  console.log("parseTime", cFormat)
+
   if (arguments.length === 0) {
     return null
   }
@@ -28,6 +31,8 @@ export function parseTime(time, cFormat) {
     s: date.getSeconds(),
     a: date.getDay()
   }
+  console.log("format", format)
+  console.log("format.replace", format.replace)
   const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
     let value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
@@ -37,6 +42,7 @@ export function parseTime(time, cFormat) {
     }
     return value || 0
   })
+  console.log("time_str", time_str)
   return time_str
 }
 
