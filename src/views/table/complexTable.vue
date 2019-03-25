@@ -165,10 +165,11 @@ export default {
   },
   data() {
     return {
-      tableKey: 0,
+      tableKey: 0, // 传入table 的:key, 每当勾选审核人table 就会加一
       list: null,
       total: 0,
       listLoading: true,
+      // 数据的初始值
       listQuery: {
         page: 1,
         limit: 20,
@@ -182,6 +183,7 @@ export default {
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
+      // temp 表单初始化数据
       temp: {
         id: undefined,
         importance: 1,
@@ -191,12 +193,16 @@ export default {
         type: '',
         status: 'published'
       },
+      // 包含表单的对话框的显示
       dialogFormVisible: false,
+      // 表单的状态 字符串
       dialogStatus: '',
+      // 表单的两种状态 对象
       textMap: {
         update: 'Edit',
         create: 'Create'
       },
+      // 阅读量的对话框的显示
       dialogPvVisible: false,
       pvData: [],
       rules: {
@@ -235,6 +241,8 @@ export default {
       row.status = status
     },
     sortChange(data) {
+      // table 数据排序方式，升序或降序
+      console.log("data:", data)
       const { prop, order } = data
       if (prop === 'id') {
         this.sortByID(order)
